@@ -28,5 +28,7 @@ public class Pemilihan2Percobaan225 {
         }else{
             System.out.println("Bukan Segitiga");
         }
+
+        sc.close();
     }
 }

@@ -11,7 +11,6 @@ class Pemilihan2Percobaan125{
             if (tahun % 100 != 0){
                 System.out.println(tahun + " adalah tahun kabisat");
             }else{
-
                 if (tahun % 400 == 0){
                     System.out.println(tahun + " adalah tahun kabisat");
                 }else{
@@ -21,5 +20,7 @@ class Pemilihan2Percobaan125{
         } else {
             System.out.println(tahun + " adalah bukan tahun kabisat");
         }
+
+        sc.close();
     }
 }
