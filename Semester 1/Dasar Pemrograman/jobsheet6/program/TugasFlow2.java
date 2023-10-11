@@ -30,5 +30,6 @@ public class TugasFlow2 {
         }
 
         System.out.println("Jumlah Diskon: " + diskon);
+        sc.close();
     }
 }
