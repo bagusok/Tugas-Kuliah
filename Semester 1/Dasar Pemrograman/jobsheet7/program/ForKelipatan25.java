@@ -18,9 +18,11 @@ class ForKelipatan25{
             }
         }
 
+        double avg = (double) jumlah / counter;
 
         System.out.printf("Banyaknya bilangan %d dari 1 sampai 50 adalah %d\n", kelipatan, counter );
         System.out.printf("Jumlah bilangan kelipatan %d adalah %d\n", kelipatan, jumlah );
+        System.out.print("Rata-rata bilangan kelipatan " + kelipatan + " adalah " + avg);
         
     }
 }
