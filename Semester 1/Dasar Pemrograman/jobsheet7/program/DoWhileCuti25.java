@@ -37,5 +37,6 @@ public class DoWhileCuti25 {
             }
         }while(jatahCuti > 0);
 
+        sc.close();
     }
 }
