@@ -11,7 +11,7 @@ public class DoWhileCuti25 {
         jatahCuti = sc.nextInt();
 
         do{
-            System.out.print("Apakah anda ingin mengambil cuti (y/t) ?");
+            System.out.print("Apakah anda ingin mengambil cuti (y/t) ? ");
             konfirmasi = sc.next();
 
             if (konfirmasi.equalsIgnoreCase("y")){
@@ -21,9 +21,15 @@ public class DoWhileCuti25 {
                 if (jumlahHari <= jatahCuti) {
                     jatahCuti -= jumlahHari;
                     System.out.println("Sisa jatah cuti anda adalah " + jatahCuti);
+
+                    if (jatahCuti == 0) {
+                        System.out.println("Jatah cuti anda sudah habis");
+                        break;
+                    }
+                   
                 }else{
-                    System.out.print("Sisa jatah cuti anda tidak mencukupi");
-                    break;
+                    System.out.println("Sisa jatah cuti anda tidak mencukupi, tinggal sisa: " + jatahCuti + " hari");
+                     
                 }
             }
         }while(jatahCuti > 0);
