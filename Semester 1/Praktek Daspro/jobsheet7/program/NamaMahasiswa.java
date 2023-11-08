@@ -5,7 +5,7 @@ class NamaMahasiswa {
 
         Scanner sc = new Scanner(System.in);
 
-       for (int i = 1; i <= 2; i++) {
+       for (int i = 1; i <= 30; i++) {
             System.out.print("Masukkan nama mahasiswa ke-" + i + ": ");
             String nama = sc.next();
 

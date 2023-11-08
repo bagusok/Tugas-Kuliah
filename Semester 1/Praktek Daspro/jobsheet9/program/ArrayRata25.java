@@ -8,7 +8,6 @@ public class ArrayRata25 {
         int jml = sc.nextInt();
 
         int[] nilaiMhs = new int[jml];
-        double total = 0;
         int lulus = 0;
         double sumLulus = 0;
         double sumTidakLulus = 0;
@@ -24,9 +23,6 @@ public class ArrayRata25 {
             }
         }
 
-        for(int i=0; i<nilaiMhs.length; i++) {
-            total += nilaiMhs[i];
-        }
 
         double rataLulus = sumLulus / lulus;
         double rataTidakLulus = sumTidakLulus / (nilaiMhs.length - lulus);
