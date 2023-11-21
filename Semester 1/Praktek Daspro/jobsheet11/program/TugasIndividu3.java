@@ -9,6 +9,11 @@ public class TugasIndividu3 {
 
         for (int i = 1; i<=n; i++) {
 
+            if (n < 3 ) {
+                System.out.println("Inputan tidak boleh kurang dari 3");
+                break;
+            }
+            
             for(int j = 1; j<=n; j++){
                 if (i == 1 || i == n) {
                    System.out.print(n + " ");
