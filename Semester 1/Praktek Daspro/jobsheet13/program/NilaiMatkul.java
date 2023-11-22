@@ -1,12 +1,22 @@
 import java.util.Scanner;
 
 class NilaiMatkul{
-    static String[] nama = new String[5];
-    static int[][] nilai = new int[5][7];
+    static String[] nama;
+    static int[][] nilai;
 
     static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
+
+        System.out.print("Masukkan jumlah mahasiswa: ");
+        int jumlahMhs = sc.nextInt();
+        System.out.print("Masukkan jumlah tugas: ");
+        int jumlahTugas = sc.nextInt();
+
+        nama = new String[jumlahMhs];
+        nilai = new int[jumlahMhs][jumlahTugas];
+
+
         inputNilai();
         System.out.println("=====================================");
         tampilNilai();
@@ -15,11 +25,11 @@ class NilaiMatkul{
     }
 
     static void inputNilai() {
-        for (int i = 0; i<5; i++) {
+        for (int i = 0; i<nama.length; i++) {
             System.out.println("Mahasiswa ke-" + (i+1));
             System.out.print("Masukkan nama Mahasiswa: ");
             nama[i] = sc.next();
-            for (int j = 0; j<7; j++) {
+            for (int j = 0; j<nilai[i].length; j++) {
                 System.out.print("Masukkan nilai ke-" + (j+1) + ": ");
                 nilai[i][j] = sc.nextInt();
             }
@@ -30,10 +40,10 @@ class NilaiMatkul{
     }
 
     static void tampilNilai(){
-        for (int i = 0; i<5; i++) {
+        for (int i = 0; i<nama.length; i++) {
             System.out.println("Mahasiswa ke-" + (i+1));
             System.out.println("Nama: " + nama[i]);
-            for (int j = 0; j<5; j++) {
+            for (int j = 0; j<nilai[i].length; j++) {
                 System.out.println("Nilai minggu ke-" + (j+1) + ": " + nilai[i][j]);
             }
 
