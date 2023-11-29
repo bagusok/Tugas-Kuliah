@@ -1,10 +1,10 @@
 import java.util.Scanner;
 
 class NilaiMatkul{
-    static String[] nama;
-    static int[][] nilai;
+    private static String[] nama;
+    private static int[][] nilai;
 
-    static Scanner sc = new Scanner(System.in);
+    private static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
 
