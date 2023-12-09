@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 class Antrian2 {
 
-    private static String queue[][] = new String[2][3]; // [[nama, status, queueNumber]]
+    private static String queue[][] = new String[5][3]; // [[nama, status, queueNumber]]
     private static Scanner sc = new Scanner(System.in);
     private static int queueNumberMax = 0;
     private static int queueNumberNow = 0;
@@ -32,7 +32,7 @@ class Antrian2 {
                 addQueue();
                 break;
             case 2:
-                // deleteQueue();
+                deleteQueue();
                 break;
             case 3:
                 viewQueue();
@@ -83,27 +83,34 @@ class Antrian2 {
         goBack();
     }
 
-    // private static void deleteQueue() {
-    //     System.out.println("Hapus Antrian");
-    //     System.out.println("Masukkan Nama: ");
-    //     String nama = sc.next();
+    private static void deleteQueue() {
+        System.out.println("Hapus Antrian");
+        System.out.print("Masukkan Nama: ");
+        String nama = sc.next();
+        
+        boolean found = false;
 
-    //     for (int i = 0; i < queue.length; i++) {
-    //         if (queue[i][0] == null) {
-    //             System.out.println("Antrian Kosong");
-    //             continue;
-    //         }else if (queue[i][0].equals(nama)) {
-    //             queue[i][0] = null;
-    //             queue[i][1] = null;
-    //             queue[i][2] = null;
-    //             System.out.println("Antrian Berhasil Dihapus");
-    //             break;
-    //         }else{
-    //             System.out.println("Antrian Kosong" + nama + " tidak ditemukan");
-    //         }
-    //     }
-    //     goBack();
-    // }
+        for (int i = 0; i < queue.length; i++) {
+            if (queue[i][0] == null) {
+                // Antrian Kosong, skip to the next iteration
+                continue;
+            } else if (queue[i][0].equals(nama)) {
+                // Nama ditemukan, hapus antrian
+                queue[i][0] = null;
+                queue[i][1] = null;
+                queue[i][2] = null;
+                found = true;
+                System.out.println("Antrian Berhasil Dihapus");
+                break;
+            }
+        }
+
+        if (!found) {
+            System.out.println("Antrian dengan nama " + nama + " tidak ditemukan");
+        }
+
+        goBack();
+    }
 
     private static void viewQueue() {
         
@@ -127,22 +134,44 @@ class Antrian2 {
 
     private static void callQueue() {
 
+        boolean queueCalled = false;
+
+        while (queueNumberNow < queueNumberMax && isQueueEmpty(queueNumberNow)) {
+            queueNumberNow++;
+        }
+    
         for (int i = 0; i < queue.length; i++) {
             if (queue[i][0] == null) {
-                System.out.println("Antrian Kosong");
+                // System.out.println("Antrian Kosong");
                 continue;
-            }else if (queue[i][2].equals(Integer.toString(queueNumberNow))) {
+            } else if (queue[i][2].equals(Integer.toString(queueNumberNow))) {
                 System.out.println("Nama: " + queue[i][0] + " dipanggil!");
-                queueNumberNow++;
                 queue[i][0] = null;
                 queue[i][1] = null;
                 queue[i][2] = null;
+                queueCalled = true;
                 break;
             }
-        
         }
-
+    
+        if (!queueCalled) {
+            System.out.println("Antrian Kosong");
+        }
+    
+        // Move to the next valid queue number
+        
+    
         goBack();
+    }
+
+    
+    private static boolean isQueueEmpty(int queueNumber) {
+        for (int i = 0; i < queue.length; i++) {
+            if (queue[i][2] != null && queue[i][2].equals(Integer.toString(queueNumber))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private static boolean isQueueFull() {
