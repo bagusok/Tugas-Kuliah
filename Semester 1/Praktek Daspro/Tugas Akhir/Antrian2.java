@@ -1,8 +1,9 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 class Antrian2 {
 
-    private static String queue[][] = new String[5][3]; // [[nama, status, queueNumber]]
+    private static String queue[][] = new String[2][3]; // [[nama, status, queueNumber]]
     private static Scanner sc = new Scanner(System.in);
     private static int queueNumberMax = 0;
     private static int queueNumberNow = 0;
@@ -15,7 +16,7 @@ class Antrian2 {
 
         System.out.println();
         System.out.println("===========================================");
-        System.out.println("=    Selamat Datang Di Antrian Klinik     =");
+        System.out.println("=       Selamat Datang Di Antrian         =");
         System.out.println("===========================================");
 
         
