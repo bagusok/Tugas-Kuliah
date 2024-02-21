@@ -1,12 +1,12 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 class Antrian2 {
 
-    private static String queue[][] = new String[2][3]; // [[nama, status, queueNumber]]
+    private static String queue[][] = new String[100][3]; // [[nama, No Unik, queueNumber]]
     private static Scanner sc = new Scanner(System.in);
     private static int queueNumberMax = 0;
     private static int queueNumberNow = 0;
+
     public static void main(String[] args) {
         selectMenu();
         sc.close();
@@ -21,7 +21,7 @@ class Antrian2 {
 
         
         System.out.println("1. Tambah Antrian");
-        System.out.println("2. Hapus Antrian");
+        System.out.println("2. Cancel Antrian");
         System.out.println("3. Lihat Antrian");
         System.out.println("4. Panggil Antrian");
         System.out.println("5. Keluar");
@@ -85,6 +85,7 @@ class Antrian2 {
     }
 
     private static void deleteQueue() {
+
         System.out.println("Hapus Antrian");
         System.out.print("Masukkan Nama: ");
         String nama = sc.next();
@@ -135,7 +136,7 @@ class Antrian2 {
 
     private static void callQueue() {
 
-        boolean queueCalled = false;
+        boolean isQueueCalled = false;
 
         while (queueNumberNow < queueNumberMax && isQueueEmpty(queueNumberNow)) {
             queueNumberNow++;
@@ -146,22 +147,20 @@ class Antrian2 {
                 // System.out.println("Antrian Kosong");
                 continue;
             } else if (queue[i][2].equals(Integer.toString(queueNumberNow))) {
-                System.out.println("Nama: " + queue[i][0] + " dipanggil!");
+                System.out.println("Nama: " + queue[i][0] + " dengan nomor A-"+ queue[i][2] + " dipanggil!");
                 queue[i][0] = null;
                 queue[i][1] = null;
                 queue[i][2] = null;
-                queueCalled = true;
+                isQueueCalled = true;
                 break;
             }
         }
     
-        if (!queueCalled) {
+        if (!isQueueCalled) {
             System.out.println("Antrian Kosong");
         }
     
         // Move to the next valid queue number
-        
-    
         goBack();
     }
 
