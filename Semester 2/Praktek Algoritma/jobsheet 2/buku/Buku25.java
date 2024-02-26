@@ -26,7 +26,7 @@ class Buku25 {
     }
 
     public void terjual(int jml) {
-        if (stock >= 0) {
+        if (stock > 0 && stock >= jml) {
             terjual += jml;
             stock -= jml;
 
