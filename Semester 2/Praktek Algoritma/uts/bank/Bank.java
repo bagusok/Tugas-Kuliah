@@ -99,24 +99,24 @@ public class Bank {
         b.addRek(new Rekening("168507083528", "Kamal", "1-115-339-7678", "dictum@nec.edu", 567770));
     
         // // Tampil Semua Data Rekening
-        // b.showAllRek();
+        b.showAllRek();
 
         // Urutkan saldo rekening dari yang terbesar
-        // b.sortRekByDesc();
+        b.sortRekByDesc();
 
         // Tampilkan Data Rekening yang Saldo nya kurang dari 50.000
-        // b.showRekUnder50();
+        b.showRekUnder50();
 
         // // Cari Rekening berdasarkan nama
-        // b.findRekByName("Malcolm");
-        // b.findRekByName("Kamal");
+        b.findRekByName("Malcolm");
+        b.findRekByName("Kamal");
         // // Nama Joni Tidak Ada
-        // b.findRekByName("Joni");
+        b.findRekByName("Joni");
 
         // // Tarik Uang Rekening Jmlah Tertentu
-        // b.addSaldo("161007278862", 250000);
+        b.addSaldo("161007278862", 250000);
         // // Rekening Salah
-        // b.addSaldo("111111111", 250000);
+        b.addSaldo("111111111", 250000);
 
         // Setor Uang Rekening Jmlah Tertentu
         b.tarikSaldo("161807297229", 100000);
