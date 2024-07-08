@@ -1,0 +1,214 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  idUser         Int             @id @default(autoincrement()) @map("id_user")
+  name           String
+  username       String          @unique
+  phone          String          @unique
+  email          String          @unique
+  password       String
+  role           UserRole        @default(USER)
+  address        Address[]
+  historyorder   historyorder[]
+  products       Products[]
+  reviews        Reviews[]
+  shopping_carts ShoppingCarts[]
+  whishlist      Whishlist[]
+
+  @@map("users")
+}
+
+model Address {
+  idAddress    Int            @id @default(autoincrement()) @map("id_address")
+  idUser       Int            @map("id_user")
+  isPrimary    Boolean        @default(false) @map("is_primary")
+  city         String
+  province     String
+  postalCode   String         @map("postal_code")
+  detail       String
+  name         String
+  phone        String
+  user         Users          @relation(fields: [idUser], references: [idUser])
+  historyorder historyorder[]
+
+  @@index([idUser], map: "id_user")
+  @@map("address")
+}
+
+model Products {
+  idProduct       Int               @id @default(autoincrement()) @map("id_product")
+  name            String
+  price           Int
+  image           String
+  description     String
+  stock           Int
+  idUser          Int               @map("id_user")
+  idCategory      Int               @map("id_category")
+  discounts       Discounts?
+  orderedproducts orderedproducts[]
+  category        Categories        @relation(fields: [idCategory], references: [idCategory])
+  user            Users             @relation(fields: [idUser], references: [idUser])
+  reviews         Reviews[]
+  ShoppingCarts   ShoppingCarts[]
+  whishlist       Whishlist[]
+
+  @@index([idCategory], map: "products_id_category_fkey")
+  @@index([idUser], map: "products_id_user_fkey")
+  @@map("products")
+}
+
+model Categories {
+  idCategory Int        @id @default(autoincrement()) @map("id_category")
+  name       String
+  products   Products[]
+
+  @@map("categories")
+}
+
+model ShoppingCarts {
+  idCart            Int      @id @default(autoincrement()) @map("id_cart")
+  idUser            Int      @map("id_user")
+  qty               Int
+  total             Int
+  productsIdProduct Int
+  user              Users    @relation(fields: [idUser], references: [idUser])
+  product           Products @relation(fields: [productsIdProduct], references: [idProduct])
+
+  @@index([idUser], map: "shopping_carts_id_user_fkey")
+  @@index([productsIdProduct], map: "shopping_carts_productsIdProduct_fkey")
+  @@map("shopping_carts")
+}
+
+model Discounts {
+  idDiscount        Int          @id @default(autoincrement()) @map("id_discount")
+  idProduct         Int?         @unique @map("id_product")
+  name              String
+  discountInPercent Int          @map("discount_in_percent")
+  discountInPrice   Int          @map("discount_in_price")
+  typeDiscount      typeDiscount @default(OTHER) @map("type_discount")
+  product           Products?    @relation(fields: [idProduct], references: [idProduct])
+
+  @@map("discounts")
+}
+
+model Reviews {
+  idReview  Int      @id @default(autoincrement()) @map("id_review")
+  idUser    Int      @map("id_user")
+  idProduct Int      @map("id_product")
+  comment   String
+  rating    Int
+  image     String
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(0)
+  product   Products @relation(fields: [idProduct], references: [idProduct])
+  user      Users    @relation(fields: [idUser], references: [idUser])
+
+  @@index([idProduct], map: "reviews_id_product_fkey")
+  @@index([idUser], map: "reviews_id_user_fkey")
+  @@map("reviews")
+}
+
+model Whishlist {
+  idWhishlist Int      @id @default(autoincrement()) @map("id_whishlist")
+  idUser      Int      @map("id_user")
+  id_product  Int
+  products    Products @relation(fields: [id_product], references: [idProduct], onDelete: Cascade, map: "whishlist_ibfk_1")
+  user        Users    @relation(fields: [idUser], references: [idUser])
+
+  @@index([id_product], map: "id_product")
+  @@index([idUser], map: "whishlist_id_user_fkey")
+  @@map("whishlist")
+}
+
+model Payments {
+  idPayment      Int            @id @default(autoincrement()) @map("id_payment")
+  name           String
+  bank_name      String         @map("bank_name")
+  account_number String?        @map("account_number")
+  account_name   String         @map("account_name")
+  qr_code        String?        @map("qr_code") @db.Text
+  type           PaymentType    @default(BANK_TRANSFER) @map("type")
+  fee            Int            @default(0)
+  historyorder   historyorder[]
+
+  @@map("payments")
+}
+
+model historyorder {
+  id_transaction  Int                          @id @default(autoincrement())
+  id_user         Int
+  id_payment      Int
+  id_address      Int
+  total_price     Int
+  payment_status  historyorder_payment_status  @default(PENDING)
+  shipping_status historyorder_shipping_status @default(PENDING)
+  created_at      DateTime                     @default(now()) @db.Timestamp(0)
+  updated_at      DateTime                     @db.Timestamp(0)
+  address         Address                      @relation(fields: [id_address], references: [idAddress], map: "HistoryOrder_id_address_fkey")
+  payments        Payments                     @relation(fields: [id_payment], references: [idPayment], map: "HistoryOrder_id_payment_fkey")
+  users           Users                        @relation(fields: [id_user], references: [idUser], map: "HistoryOrder_id_user_fkey")
+  orderedproducts orderedproducts[]
+
+  @@index([id_address], map: "HistoryOrder_id_address_fkey")
+  @@index([id_payment], map: "HistoryOrder_id_payment_fkey")
+  @@index([id_user], map: "HistoryOrder_id_user_fkey")
+}
+
+model orderedproducts {
+  id                           Int           @id @default(autoincrement())
+  id_product                   Int
+  qty                          Int
+  total_price                  Int
+  history_order_id_transaction Int?
+  historyorder                 historyorder? @relation(fields: [history_order_id_transaction], references: [id_transaction], map: "OrderedProducts_history_order_id_transaction_fkey")
+  products                     Products      @relation(fields: [id_product], references: [idProduct], map: "OrderedProducts_id_product_fkey")
+
+  @@index([history_order_id_transaction], map: "OrderedProducts_history_order_id_transaction_fkey")
+  @@index([id_product], map: "OrderedProducts_id_product_fkey")
+}
+
+enum UserRole {
+  USER
+  SELLER
+
+  @@map("user_role")
+}
+
+enum typeDiscount {
+  FLASH_SALE
+  PAYDAY
+  OTHER
+
+  @@map("type_discount")
+}
+
+enum PaymentType {
+  BANK_TRANSFER
+  E_WALLET
+  COD
+  QRIS
+
+  @@map("payment_type")
+}
+
+enum historyorder_payment_status {
+  PENDING
+  SUCCESS
+  FAILED
+  EXPIRED
+}
+
+enum historyorder_shipping_status {
+  PENDING
+  PACKAGING
+  SHIPPING
+  DELIVERED
+  CANCELLED
+  FAILED
+}

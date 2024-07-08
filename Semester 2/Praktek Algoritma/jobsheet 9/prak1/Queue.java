@@ -122,6 +122,14 @@ class Queue{
         System.out.println("===================================");
     }
 
+    void peekRear() {
+        if (!isEmpty()) {
+            System.out.println("Elemen paling belakang: " + data[rear].norek);
+        } else {
+            System.out.println("Antrian kosong");
+        }
+    }
+
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
